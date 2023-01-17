@@ -12,7 +12,8 @@ export const getStaticProps = async () => {
     props: {
       projects: await listProjects([]),
       discover: await getDiscover()
-    }
+    },
+    revalidate: 10
   };
 };
 

@@ -1,0 +1,51 @@
+{
+  "name": "materia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/base": "^5.0.0-alpha.113",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.4",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "@xstyled/emotion": "^3.7.0",
+    "clsx": "^1.2.1",
+    "data-urls": "^4.0.0",
+    "formidable": "^2.1.1",
+    "formik": "^2.2.9",
+    "mime-types": "^2.1.35",
+    "next": "^13.1.1",
+    "postgres": "^3.3.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-select": "^5.7.0",
+    "swr": "^2.0.0",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/data-urls": "^3.0.1",
+    "@types/formidable": "^2.0.5",
+    "@types/mime-types": "^2.1.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "eslint": "^7.20.0",
+    "eslint-config-alfonz": "^0.3.0",
+    "eslint-config-next": "^11.1.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "typescript": "^4.9.4"
+  }
+}

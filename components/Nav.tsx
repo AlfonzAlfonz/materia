@@ -16,6 +16,18 @@ export const Nav: FC<Props> = ({ toggle }) => {
         <MenuButton m="submit" toggle={toggle}><AddIcon style={{ fontSize: "52px" }} /></MenuButton>
         <MenuButton m="info" toggle={toggle}><x.span fontFamily="Times, serif" pt={2}>i</x.span></MenuButton>
       </x.div>
+
+      <x.div position="fixed" bottom={16} spaceY={2}>
+        <x.h1
+          transform="rotate(-90deg) translateX(-60px) translateY(33px)"
+          transformOrigin="left center"
+          fontSize="98px"
+          color="#ccc"
+          letterSpacing="-4.9px"
+        >
+          Comaterial
+        </x.h1>
+      </x.div>
     </x.div>
   );
 };

@@ -16,7 +16,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
 
   return (
     <ReactUiContext.Provider value={context}>
-      <x.div display="flex" minHeight="100vh" bg="#EFEFEF" p="20px">
+      <x.div display="flex" minHeight="100vh" bg="#EFEFEF" p="20px" gap="20px">
         <Nav
           toggle={m => {
             m !== "discover" && push("/", "/", { shallow: true });
@@ -25,7 +25,6 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
         />
 
         <x.div
-          ml="20px"
           display="grid"
           gap="10px"
           gridTemplateColumns={[...Array(6)].map(_ => "1fr").join(" ")}

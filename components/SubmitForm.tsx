@@ -28,7 +28,7 @@ type SubmitForm = {
 };
 
 export const SubmitForm: FC = () => {
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   const { trigger } = useSWRMutation("/api/submit-project", fetchSubmit);
 
   return !submitted ? (
@@ -46,6 +46,7 @@ export const SubmitForm: FC = () => {
 
         const result = await trigger({ ...rest, files: encodedFiles });
         a.setSubmitting(false);
+        setSubmitted(true);
       }}
     >
       {({ isSubmitting }) => (

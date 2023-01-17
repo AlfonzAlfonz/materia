@@ -1,12 +1,12 @@
+import CloseIcon from "@mui/icons-material/Close";
 import styled, { SystemProps, x } from "@xstyled/emotion";
 import { Project } from "data/types";
 import { useRouter } from "next/router";
-import { FC, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 import { only } from "utils";
-import { Modal } from "./Model";
 
+import { Modal } from "./Model";
 import { SmallTag, Title } from "./Ui";
-import CloseIcon from "@mui/icons-material/Close";
 
 type Item = { id: number; img: string; name: string; tags: string[]; project: Project };
 
@@ -22,7 +22,7 @@ export const ProjectGrid: FC<Props> = ({ columns, items }) => {
 
   return (
     <>
-      {/* <ProjectModal project={project} onClose={() => push({ query: { ...query, project: [] } })} /> */}
+      <ProjectModal project={project} onClose={() => push({ query: { ...query, project: [] } }, undefined, { shallow: true })} />
       <x.div
         display="grid"
         gap="10px"
@@ -32,10 +32,10 @@ export const ProjectGrid: FC<Props> = ({ columns, items }) => {
           <Tile
             key={i}
             overflow="hidden"
-            backgroundImage={getImgUrl("https://placekitten.com/300/400")}
+            backgroundImage={getImgUrl(itm.img ? `/static/uploads/${itm.id}/${itm.img}` : "https://placekitten.com/300/400")}
             backgroundPosition="center"
             backgroundSize="cover"
-            onClick={() => push({ query: { project: itm.id } })}
+            onClick={() => push({ query: { project: itm.id } }, undefined, { shallow: true })}
           >
             <x.div opacity={0} h="100%" position="relative" cursor="pointer">
               <x.div position="absolute" top={0} left={0} right={0} bottom={0} bg="gray-200" opacity={0.5} />
@@ -57,7 +57,7 @@ const getImgUrl = (src: string) =>
   `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75")`;
 
 export const Tile = styled.divBox`
-  transition: 100ms background-color, opacity;
+  transition: 100ms background-color, 100ms opacity;
   aspect-ratio: 289 / 335;
   box-shadow: 0px 3px 6px #00000029;
   border-radius: 5px;
@@ -75,6 +75,8 @@ export const Tile = styled.divBox`
 `;
 
 export const ProjectModal: FC<{ project?: Item; onClose: () => unknown }> = ({ project, onClose }) => {
+  const noImgs = project && project.project.files.length === 0;
+
   return (
     <Modal open={!!project} onClose={onClose}>
       {project && (
@@ -84,9 +86,10 @@ export const ProjectModal: FC<{ project?: Item; onClose: () => unknown }> = ({ p
           maxW="60vw"
           maxH="70vh"
           gap="12px"
+          h="70vh"
         >
           <x.div
-            gridColumn="1"
+            gridColumn={noImgs ? "1 / span 3" : "1"}
             display="flex"
             alignItems="flex-start"
             flexDirection="column"
@@ -111,19 +114,23 @@ export const ProjectModal: FC<{ project?: Item; onClose: () => unknown }> = ({ p
             </x.p>
           </x.div>
 
-          <x.div gridColumn="2 / span 2" display="flex" flexDirection="column" gap="16px" overflowX="hidden" overflowY="scroll" h="100%">
-            <x.div display="flex" flexGrow={0} w="100%" gap="16px">
-              {project.project.files.slice(0, 2).map((f, i) => (
-                <x.div key={i}>
-                  <ModalImg w="100%" id={project.id} f={f} />
-                </x.div>
-              ))}
-            </x.div>
+          {!noImgs && (
+            <x.div gridColumn="2 / span 2" display="flex" flexDirection="column" gap="16px" overflowX="hidden" overflowY="scroll" h="100%">
+              <x.div display="flex" flexGrow={0} w="100%" gap="16px">
+                {project.project.files.slice(0, 2).map((f, i) => (
+                  <x.div key={i}>
+                    <ModalImg w="100%" id={project.id} f={f} />
+                  </x.div>
+                ))}
+              </x.div>
 
-            <x.div>
-              <ModalImg w="100%" id={project.id} f={project.project.files[2]} />
+              {project.project.files[2] && (
+                <x.div>
+                  <ModalImg w="100%" id={project.id} f={project.project.files[2]} />
+                </x.div>
+              )}
             </x.div>
-          </x.div>
+          )}
         </x.div>
       )}
     </Modal>

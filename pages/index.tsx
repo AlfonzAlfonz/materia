@@ -36,7 +36,7 @@ export default withUi(Index);
 
 const getItem = (p: Project) => ({
   id: p.id,
-  img: "http://placekitten.com/300/400",
+  img: p.files[0]?.slice(1, -1),
   name: p.name,
   tags: [...p.designers, ...p.materials, ...p.technologies, ...p.manufacturers].map(t => t.slice(1, -1)),
   project: p

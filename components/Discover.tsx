@@ -1,6 +1,6 @@
 import { x } from "@xstyled/emotion";
 import { useRouter } from "next/router";
-import { ComponentProps, FC, Fragment } from "react";
+import { ComponentProps, FC } from "react";
 import { more } from "utils";
 
 import { PlainSelectInput } from "./SelectInput";
@@ -16,9 +16,12 @@ export const Discover: FC = () => {
         <x.label display="flex" flexDirection="column" spaceY="20px">
           <Title as="div" alignSelf="flex-start">Hledat</Title>
           <PlainSelectInput
-            value={more(query.discover).map(t => ({ value: t, label: t }))}
+            value={more(query.discover).map(t => t)}
             onChange={v => {
-              push({ query: { discover: [...new Set(v.map(o => o.value))] } });
+              push({ query: { discover: [...new Set(v)] } }, undefined, { shallow: true });
+            }}
+            onCreateOption={v => {
+              push({ query: { discover: [...new Set([...more(query.discover), v])] } }, undefined, { shallow: true });
             }}
           />
         </x.label>
@@ -58,7 +61,7 @@ export const Tags: FC<{ tags: string[] }> = ({ tags }) => {
       {tags.map(t => (
         <Tag
           key={t}
-          onClick={() => push({ query: { discover: [...new Set([...more(query.discover) ?? [], t])] } })}
+          onClick={() => push({ query: { discover: [...new Set([...more(query.discover) ?? [], t])] } }, undefined, { shallow: true })}
           mr="10px"
           mb="10px"
         >

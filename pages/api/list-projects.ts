@@ -16,7 +16,7 @@ const arrayQuery = (array: string[]) => sql`to_tsquery('simple', ${array.map(x =
 
 export const listProjects = async (discover: string[]): Promise<Project[]> => {
   return await sql`
-    SELECT id, name, designers, materials, technologies, manufacturers, annotation FROM projects  
+    SELECT id, name, designers, materials, technologies, manufacturers, annotation, files FROM projects  
     ${discover.length > 0 ? sql`
       WHERE
         name_vec @@ to_tsquery('simple', ${only(discover) + ":*"})

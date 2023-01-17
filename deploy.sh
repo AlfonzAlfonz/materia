@@ -7,5 +7,5 @@ cp ~/.env.local .env.local
 mkdir static
 ln -s ~/uploads static/uploads
 
-yarn
-yarn build
+npx pnpm i
+npx pnpm next build

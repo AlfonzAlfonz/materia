@@ -16,7 +16,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
 
   return (
     <ReactUiContext.Provider value={context}>
-      <x.div display="flex" minHeight="100vh" bg="#EFEFEF" p="20px" gap="20px">
+      <x.div display="flex" minHeight="100vh" p="20px" gap="20px">
         <Nav
           toggle={m => {
             m !== "discover" && push("/", "/", { shallow: true });

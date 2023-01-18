@@ -1,4 +1,5 @@
-import { defaultTheme, Preflight, ThemeProvider } from "@xstyled/emotion";
+import styled from "@emotion/styled";
+import { defaultTheme, Preflight, ThemeProvider, createGlobalStyle } from "@xstyled/emotion";
 import { AppProps } from "next/app";
 import { FC } from "react";
 
@@ -9,6 +10,7 @@ const theme = {
 export const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider theme={theme}>
+      <Global />
       <Preflight />
       <Component {...pageProps} />
     </ThemeProvider>
@@ -16,3 +18,9 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
 };
 
 export default App;
+
+const Global = createGlobalStyle`
+  html {
+    background: #EFEFEF;
+  }
+`;

@@ -143,5 +143,5 @@ export const schema = object().shape({
   technologies: arrayRequired(1, 5, string().required()),
   materials: arrayRequired(1, 5, string().required()),
   annotation: stringRequired(),
-  files: arrayRequired(0, 5, string().required())
+  files: arrayRequired(1, 3, string().required())
 });

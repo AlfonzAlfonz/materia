@@ -85,7 +85,7 @@ export const PlainSelectInput = (p: CreatableProps<Opt, true, GroupBase<Opt>>) =
   );
 };
 
-const MultiValueContainer: FC<MultiValueProps<Opt, true, GroupBase<Opt>>> = (p) => {
+const MultiValueContainer: FC<MultiValueGenericProps<Opt, true, GroupBase<Opt>>> = (p) => {
   return (
     <Tag bg="black" color="white" whiteSpace="nowrap" display="flex">
       {p.children}

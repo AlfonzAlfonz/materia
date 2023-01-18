@@ -16,9 +16,6 @@ const arrayQuery = (array: string | string[]) =>
   sql`to_tsquery('simple', ${more(array).map(s => s.split(" ").join(" & ")).join(" | ")})`;
 
 export const listProjects = async (discover: string[]): Promise<Project[]> => {
-  const x = only(discover);
-  console.log(x);
-
   return await sql`
     SELECT id, name, designers, materials, technologies, manufacturers, annotation, files FROM projects  
     ${discover.length > 0 ? sql`

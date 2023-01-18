@@ -16,9 +16,9 @@ export const Discover: FC = () => {
         <x.label display="flex" flexDirection="column" spaceY="20px">
           <Title as="div" alignSelf="flex-start">Hledat</Title>
           <PlainSelectInput
-            value={more(query.discover).map(t => t)}
+            value={more(query.discover).map(t => ({ value: t, label: t }))}
             onChange={v => {
-              push({ query: { discover: [...new Set(v)] } }, undefined, { shallow: true });
+              push({ query: { discover: [...new Set(v.map(vv => vv.value))] } }, undefined, { shallow: true });
             }}
             onCreateOption={v => {
               push({ query: { discover: [...new Set([...more(query.discover), v])] } }, undefined, { shallow: true });

@@ -1,12 +1,14 @@
+import { DiscoverGrid } from "components/DiscoverGrid";
 import { ProjectGrid } from "components/ProjectGrid";
+import { getItem } from "components/ProjectGrid/utils";
 import { Ui, useUi } from "components/Ui";
-import { Project } from "data/types";
 import { GetStaticProps } from "next";
+import { useRouter } from "next/router";
 import { FC } from "react";
 
+import { getDiscover } from "./api/discover";
 import { listProjects } from "./api/list-projects";
 
-import { DiscoverRes, getDiscover } from "./api/discover";
 export const getStaticProps = async () => {
   return {
     props: {
@@ -21,9 +23,14 @@ type PropsOf<T extends GetStaticProps> = Awaited<ReturnType<T>> extends { props:
 
 export const Index: FC<PropsOf<typeof getStaticProps>> = (props) => {
   const { menu } = useUi();
+  const { query: { discover } } = useRouter();
+
+  const cols = !menu ? 6 : 4;
 
   return (
-    <ProjectGrid items={props.projects.map(getItem)} columns={!menu ? 6 : 4} />
+    discover
+      ? <DiscoverGrid columns={cols} />
+      : <ProjectGrid items={props.projects.map(getItem)} columns={cols} />
   );
 };
 
@@ -34,11 +41,3 @@ const withUi = <T extends PropsOf<typeof getStaticProps>>(C: FC<T>): FC<T> => {
 };
 
 export default withUi(Index);
-
-const getItem = (p: Project) => ({
-  id: p.id,
-  img: p.files[0]?.slice(1, -1),
-  name: p.name,
-  tags: [...p.designers, ...p.materials, ...p.technologies, ...p.manufacturers].map(t => t.slice(1, -1)),
-  project: p
-});

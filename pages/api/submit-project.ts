@@ -10,7 +10,7 @@ interface ReqBody {
   manufacturers: string[];
   technologies: string[];
   materials: string[];
-  files: string[];
+  files: { data: string; name: string }[];
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -27,7 +27,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const result = await sql`INSERT INTO projects(name) VALUES (${body.name}) RETURNING *`.catch(() => null);
+  const result = await sql`
+    INSERT INTO projects(name, designers, manufacturers, technologies, materials, files) 
+    VALUES (${body.name}, ${body.designers}, ${body.manufacturers}, ${body.technologies}, ${body.materials}, ${body.files.map(f => f.name)}) 
+    RETURNING *`
+    .catch(() => null);
+
   if (result === null) {
     res.status(400).end();
     return;
@@ -38,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await fs.mkdir(basePath, { recursive: true });
 
   for (const [i, file] of body.files.entries()) {
-    const [info, data] = file.split(",");
+    const [info, data] = file.data.split(",");
 
     const ext = info.includes("image/jpeg") || info.includes("image/jpg") ? "jpg" : info.includes("data/png") ? "png" : undefined;
 
@@ -48,7 +53,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     await fs.writeFile(
-      path.join(basePath, `${i}.${ext}`),
+      path.join(basePath, `${file.name}`),
       Buffer.from(data, "base64"),
       { flag: "w+" }
     );
@@ -61,7 +66,14 @@ export default handler;
 
 export const schema = object().shape({
   name: string().required(),
-  files: array().of(string().required())
+  designers: array().of(string().required()).max(5),
+  manufacturers: array().of(string().required()).max(5),
+  technologies: array().of(string().required()).max(5),
+  materials: array().of(string().required()).max(5),
+  files: array().max(3).of(object().shape({
+    name: string().required(),
+    data: string().required()
+  }))
 });
 
 export const config = {

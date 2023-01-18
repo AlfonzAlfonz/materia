@@ -1,38 +1,51 @@
-import { useField } from "formik";
-import { FC } from "react";
-import { GroupBase, MultiValueProps } from "react-select";
+import CloseIcon from "@mui/icons-material/Close";
+import { x } from "@xstyled/emotion";
+import { useField, useFormikContext } from "formik";
+import { FC, useMemo } from "react";
+import { components, GroupBase, MultiValueGenericProps, MultiValueProps, MultiValueRemoveProps } from "react-select";
 import Creatable, { CreatableProps } from "react-select/creatable";
+
 import { Tag } from "./Discover";
 
 interface Props {
   name: string;
+  options?: string[];
 }
 
-export const SelectInput: FC<Props> = ({ name }) => {
+export const SelectInput: FC<Props> = ({ name, options }) => {
+  const { isSubmitting } = useFormikContext();
   const [{ value }, , { setValue }] = useField<readonly string[]>(name);
+
+  const opts = useMemo(() => options?.map(o => ({ label: o, value: o })), [options]);
+  const val = useMemo(() => value.map(v => ({ label: v, value: v })), [value]);
 
   return (
     <PlainSelectInput
-      value={value ?? []}
+      value={val ?? []}
+      options={opts}
       onChange={(v) => {
-        setValue(v);
+        setValue(v.map(vv => vv.value));
       }}
       onCreateOption={v => {
         setValue([...value ?? [], v]);
       }}
+      isDisabled={isSubmitting}
     />
   );
 };
 
 const Noop = () => undefined!;
 
-export const PlainSelectInput = <Option, Group extends GroupBase<Option>>(p: CreatableProps<Option, true, Group>) => {
+type Opt = { label: string; value: string };
+
+export const PlainSelectInput = (p: CreatableProps<Opt, true, GroupBase<Opt>>) => {
   return (
     <Creatable
       isMulti
       components={{
         IndicatorsContainer: Noop,
-        MultiValue: MultiValue as any,
+        MultiValueContainer,
+        MultiValueRemove,
         Placeholder: Noop
       }}
       noOptionsMessage={() => null}
@@ -47,6 +60,7 @@ export const PlainSelectInput = <Option, Group extends GroupBase<Option>>(p: Cre
         valueContainer: () => ({
           padding: 0,
           display: "flex",
+          gap: "8px",
           flexWrap: "wrap"
         }),
         input: () => ({
@@ -55,13 +69,34 @@ export const PlainSelectInput = <Option, Group extends GroupBase<Option>>(p: Cre
           display: "flex",
           minHeight: "42px",
           width: "auto"
-        })
+        }),
+        option: () => ({
+          "fontSize": "20px",
+          "lineHeight": 2,
+          "padding": "0 .5rem",
+          ":hover": {
+            background: "#eee"
+          }
+        }),
+        multiValueLabel: () => ({})
       }}
       {...p}
     />
   );
 };
 
-const MultiValue: FC<MultiValueProps<any, any, GroupBase<any>>> = (p) => {
-  return <Tag bg="black" color="white" whiteSpace="nowrap">{p.data}</Tag>;
+const MultiValueContainer: FC<MultiValueProps<Opt, true, GroupBase<Opt>>> = (p) => {
+  return (
+    <Tag bg="black" color="white" whiteSpace="nowrap" display="flex">
+      {p.children}
+    </Tag>
+  );
+};
+
+const MultiValueRemove: FC<MultiValueRemoveProps<Opt, true, GroupBase<Opt>>> = (p) => {
+  return (
+    <x.div {...p.innerProps} display="flex" alignItems="center">
+      <CloseIcon fontSize="medium" />
+    </x.div>
+  );
 };

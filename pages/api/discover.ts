@@ -15,12 +15,12 @@ export type DiscoverRes = {
 };
 
 export const getDiscover = async (): Promise<DiscoverRes> => {
-  const designers = await sql`SELECT unnest(designers)  FROM projects`;
-  const technologies = await sql`SELECT unnest(technologies)  FROM projects`;
-  const materials = await sql`SELECT unnest(materials)  FROM projects`;
-  const manufacturers = await sql`SELECT unnest(manufacturers)  FROM projects`;
+  const designers = await sql`SELECT DISTINCT unnest(designers)  FROM projects`;
+  const technologies = await sql`SELECT DISTINCT unnest(technologies)  FROM projects`;
+  const materials = await sql`SELECT DISTINCT unnest(materials)  FROM projects`;
+  const manufacturers = await sql`SELECT DISTINCT unnest(manufacturers)  FROM projects`;
 
   return Object.fromEntries(
-    Object.entries({ designers, technologies, materials, manufacturers }).map(([k, v]) => [k, v.map(x => x.unnest.slice(1, -1))])
+    Object.entries({ designers, technologies, materials, manufacturers }).map(([k, v]) => [k, v.map(x => x.unnest)])
   ) as DiscoverRes;
 };

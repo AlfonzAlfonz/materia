@@ -37,11 +37,11 @@ export const ProjectGrid: FC<Props> = ({ columns, items }) => {
             onClick={() => push({ query: { project: itm.id } }, undefined, { shallow: true })}
           >
             <x.div opacity={0} h="100%" position="relative" cursor="pointer">
-              <x.div position="absolute" top={0} left={0} right={0} bottom={0} bg="gray-200" opacity={0.5} />
+              <x.div position="absolute" top={0} left={0} right={0} bottom={0} bg="black" opacity={1} />
               <x.div position="relative" h="100%" display="flex" flexDirection="column" justifyContent="space-between">
-                <x.h2 fontSize="2rem" mb={3}>{itm.name}</x.h2>
+                <x.h2 fontSize="18px" mb={3}>{itm.name}</x.h2>
                 <x.div display="flex" gap={1} flexWrap="wrap">
-                  {itm.tags.map(t => <SmallTag key={t} borderRadius={4}>{t}</SmallTag>)}
+                  {itm.tags.map(t => <SmallTag key={t} borderRadius={4} maxW="10rem" overflowX="hidden" textOverflow="ellipsis">{t}</SmallTag>)}
                 </x.div>
               </x.div>
             </x.div>
@@ -67,6 +67,7 @@ export const Tile = styled.divBox`
   }
 
   &:hover {
+    color: white;
     & > div {
       opacity: 1;
     }

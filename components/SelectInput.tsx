@@ -65,7 +65,7 @@ export const PlainSelectInput = (p: CreatableProps<Opt, true, GroupBase<Opt>>) =
         }),
         input: () => ({
           padding: "0 0.5rem",
-          fontSize: "26px",
+          fontSize: "18px",
           display: "flex",
           minHeight: "42px",
           width: "auto"
@@ -96,7 +96,7 @@ const MultiValueContainer: FC<MultiValueGenericProps<Opt, true, GroupBase<Opt>>>
 const MultiValueRemove: FC<MultiValueRemoveProps<Opt, true, GroupBase<Opt>>> = (p) => {
   return (
     <x.div {...p.innerProps} display="flex" alignItems="center">
-      <CloseIcon fontSize="medium" />
+      <CloseIcon fontSize="small" />
     </x.div>
   );
 };

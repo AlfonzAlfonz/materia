@@ -30,7 +30,6 @@ export const Discover: FC = () => {
           ? <DiscoverMore />
           : (
             <>
-
               <x.label display="flex" flexDirection="column" spaceY="20px">
                 <Title as="div" alignSelf="flex-start">Materiál</Title>
                 <Tags tags={discover.materials} />
@@ -57,13 +56,13 @@ export const Discover: FC = () => {
 export const Tags: FC<{ tags: string[] }> = ({ tags }) => {
   const { push, query } = useRouter();
   return (
-    <x.div display="flex" flexWrap="wrap">
+    <x.div display="flex" flexWrap="wrap" gap="10px">
       {tags.map(t => (
         <Tag
           key={t}
           onClick={() => push({ query: { discover: [...new Set([...more(query.discover) ?? [], t])] } }, undefined, { shallow: true })}
-          mr="10px"
-          mb="10px"
+          fontSize="13px"
+          py={0}
         >
           {t}
         </Tag>
@@ -75,10 +74,10 @@ export const Tags: FC<{ tags: string[] }> = ({ tags }) => {
 export const Tag: FC<ComponentProps<typeof x.div>> = (p) => {
   return (
     <x.div
-      fontSize="26px"
+      fontSize="18px"
       lineHeight="32px"
       px="10px"
-      py="5px"
+      py="0"
       boxShadow="0px 1px 3px #00000029"
       bg={{ _: "white", hover: "#989898" }}
       color={{ _: undefined, hover: "white" }}

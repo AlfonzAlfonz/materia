@@ -58,6 +58,6 @@ const Backdrop = styled(BackdropUnstyled)`
   bottom: 0;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   -webkit-tap-highlight-color: transparent;
 `;

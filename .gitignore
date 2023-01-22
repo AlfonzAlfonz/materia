@@ -1,4 +1,4 @@
 node_modules
 .next
-static/uploads
+public/uploads
 .env.local

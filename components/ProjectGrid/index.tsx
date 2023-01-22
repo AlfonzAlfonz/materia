@@ -38,7 +38,7 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
             key={i}
             expanded={expanded}
             position="relative"
-            backgroundImage={getImgUrl(itm.img ? `/static/uploads/${itm.id}/${itm.img}` : "https://placekitten.com/300/400")}
+            backgroundImage={getImgUrl(itm.img ? `/uploads/${itm.id}/${itm.img}` : "https://placekitten.com/300/400")}
             backgroundPosition="center"
             backgroundSize="cover"
             onClick={() => push({ query: { project: itm.id } }, undefined, { shallow: true })}

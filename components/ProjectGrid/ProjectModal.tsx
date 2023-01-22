@@ -93,7 +93,7 @@ export const ProjectModal: FC<{ project?: GridItem; onClose: () => unknown }> = 
 
 export const ModalImg: FC<{ id: number; f: string } & SystemProps> = ({ id, f, ...props }) => (
   <x.img
-    src={`/static/uploads/${id}/${f}`}
+    src={`/uploads/${id}/${f}`}
     alt={f}
     {...props}
   />

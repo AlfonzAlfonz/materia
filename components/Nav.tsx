@@ -1,7 +1,7 @@
 import { x, SystemProps } from "@xstyled/emotion";
 import { FC, ReactNode } from "react";
 import AddIcon from "@mui/icons-material/Add";
-import discover from "static/lupa.png";
+import discover from "public/lupa.png";
 
 import { UiContext, useUi } from "./Ui";
 import Image from "next/image";

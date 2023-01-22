@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  const basePath = path.join(process.cwd(), "static", "uploads", `${result[0].id}`);
+  const basePath = path.join(process.cwd(), "public", "uploads", `${result[0].id}`);
 
   await fs.mkdir(basePath, { recursive: true });
 

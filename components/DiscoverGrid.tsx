@@ -12,7 +12,7 @@ import { getItem } from "./ProjectGrid/utils";
 const fetcher = ([key, discover]: [string, string[]]): Promise<Project[]> =>
   fetch(key + `?${discover.map(d => `discover=${encodeURIComponent(d)}`).join("&")}`).then(r => r.json());
 
-export const DiscoverGrid: FC<{ columns: number; expanded: boolean }> = (p) => {
+export const DiscoverGrid: FC<{ expanded: boolean }> = (p) => {
   const { query: { discover } } = useRouter();
   const { data } = useSWR(["/api/list-projects", more(discover)], fetcher);
 

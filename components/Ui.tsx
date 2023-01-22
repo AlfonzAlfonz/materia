@@ -19,7 +19,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
       <x.div
         display="flex"
         minHeight="100vh"
-        p="20px"
+        px="20px"
         gap="20px"
         flexDirection={{ _: "column", md: "row" }}
       >
@@ -41,7 +41,13 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
           flexGrow={1}
         >
           {menu && (
-            <x.div gridColumn="1 / span 2" minWidth={0} mr={{ _: 0, md: 5 }}>
+            <x.div
+              gridColumn="1 / span 2"
+              minWidth={0}
+              pr={{ _: 0, md: 5 }}
+              py="20px"
+              borderRight={{ _: "none", md: "2px solid #e3e3e3" }}
+            >
               <x.div position="sticky" top={16}>
                 {menu === "discover" && <Discover />}
                 {menu === "submit" && <SubmitForm />}
@@ -49,7 +55,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
               </x.div>
             </x.div>
           )}
-          <x.div gridColumn={{ _: "1", md: menu ? "3 / span 4" : "1 / span 6" }}>
+          <x.div gridColumn={{ _: "1", md: menu ? "3 / span 4" : "1 / span 6" }} py="20px">
             {children}
           </x.div>
 

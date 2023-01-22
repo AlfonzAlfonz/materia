@@ -1,4 +1,4 @@
-import { x, SystemProps, useUp } from "@xstyled/emotion";
+import styled, { x, SystemProps, useUp } from "@xstyled/emotion";
 import { FC, ReactNode } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import discover from "public/lupa.svg";
@@ -62,7 +62,7 @@ const MenuButton: FC<{
   const { menu } = useUi();
 
   return (
-    <x.div
+    <ButtonStyle
       w={{ _: "4rem", md: "4.75rem" }}
       h={{ _: "4rem", md: "4.75rem" }}
       fontSize="52px"
@@ -70,7 +70,7 @@ const MenuButton: FC<{
       alignItems="center"
       justifyContent="center"
       bg={menu === m ? "black" : { _: "white", hover: "#707070" }}
-      color={{ _: menu === m ? "white" : "black", hover: "white" }}
+      {...{ color: { _: menu === m ? "white" : "black", hover: "white" } } as any}
       // color="white"
       boxShadow="0px 3px 6px #00000029"
       borderRadius={8}
@@ -82,6 +82,12 @@ const MenuButton: FC<{
       {...props}
     >
       {children}
-    </x.div>
+    </ButtonStyle>
   );
 };
+
+export const ButtonStyle = styled.divBox`
+  &:hover img {
+    filter: invert(1);
+  }
+`;

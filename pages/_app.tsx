@@ -1,11 +1,16 @@
-import styled from "@emotion/styled";
-import { defaultTheme, Preflight, ThemeProvider, createGlobalStyle } from "@xstyled/emotion";
+import { createGlobalStyle, defaultTheme, Preflight, ThemeProvider } from "@xstyled/emotion";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { FC } from "react";
 
 const theme = {
-  ...defaultTheme
+  ...defaultTheme,
+  fontSizes: {
+    ...defaultTheme.fontSizes,
+    sm: `${13 / 16}rem`,
+    md: `${18 / 16}rem`,
+    lg: `${26 / 16}rem`
+  }
 };
 
 export const App: FC<AppProps> = ({ Component, pageProps }) => {
@@ -26,7 +31,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
         /> */}
         {/* <meta property="og:image" content="/static/og-image.png" key="og_image" /> */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://materia.appio.dev" key="og_url" />
+        <meta property="og:url" content="https://material.space" key="og_url" />
         <meta property="og:site_name" content="Materia" />
         <meta property="og:locale" content="cs_CZ" />
         <meta

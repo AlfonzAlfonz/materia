@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { ComponentProps, createContext, FC, ReactNode, useContext, useMemo, useState } from "react";
 
 import { Discover } from "./Discover";
+import { Info } from "./Info";
 import { Nav } from "./Nav";
 import { SubmitForm } from "./SubmitForm";
 
 import type { DiscoverRes } from "pages/api/discover";
-
 export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ children, discover }) => {
   const { query, push } = useRouter();
   const [context, setContext] = useState<UiContext>({ discover });
@@ -16,7 +16,13 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
 
   return (
     <ReactUiContext.Provider value={context}>
-      <x.div display="flex" minHeight="100vh" p="20px" gap="20px">
+      <x.div
+        display="flex"
+        minHeight="100vh"
+        p="20px"
+        gap="20px"
+        flexDirection={{ _: "column", md: "row" }}
+      >
         <Nav
           toggle={m => {
             m !== "discover" && push("/", "/", { shallow: true });
@@ -27,18 +33,23 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
         <x.div
           display="grid"
           gap="10px"
-          gridTemplateColumns={[...Array(6)].map(_ => "1fr").join(" ")}
+          gridTemplateColumns={{
+            _: "1fr",
+            md: [...Array(4)].map(_ => "1fr").join(" "),
+            lg: [...Array(6)].map(_ => "1fr").join(" ")
+          }}
           flexGrow={1}
         >
           {menu && (
-            <x.div gridColumn="1 / span 2" minWidth={0} mr="20px">
+            <x.div gridColumn="1 / span 2" minWidth={0} mr={{ _: 0, md: 5 }}>
               <x.div position="sticky" top={16}>
                 {menu === "discover" && <Discover />}
                 {menu === "submit" && <SubmitForm />}
+                {menu === "info" && <Info />}
               </x.div>
             </x.div>
           )}
-          <x.div gridColumn={menu ? "3 / span 4" : "1 / span 6"}>
+          <x.div gridColumn={{ _: "1", md: menu ? "3 / span 4" : "1 / span 6" }}>
             {children}
           </x.div>
 
@@ -67,7 +78,7 @@ export const Title: FC<ComponentProps<typeof x.h2>> = p => (
     px={1}
     py="1px"
     letterSpacing="4.55px"
-    fontSize="13px"
+    fontSize="sm"
     alignSelf="flex-start"
     {...p}
   />
@@ -78,7 +89,7 @@ export const SmallTag: FC<ComponentProps<typeof x.div>> = p => (
     p="5px 10px"
     borderWidth={1}
     borderRadius={3}
-    fontSize="13px"
+    fontSize="sm"
     whiteSpace="nowrap"
     {...p}
   />

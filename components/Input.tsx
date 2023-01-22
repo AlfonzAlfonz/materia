@@ -7,13 +7,13 @@ export const Input: FC<ComponentProps<typeof x.input>> = (p) => (
   <x.input
     display="block"
     borderWidth={1}
-    borderColor="gray-600"
+    borderColor="black"
     outline="none"
     px={2}
     borderRadius={3}
     w="100%"
     h="42px"
-    fontSize="26px"
+    fontSize="lg"
     {...p}
   />
 );

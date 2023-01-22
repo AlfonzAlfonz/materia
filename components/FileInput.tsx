@@ -19,12 +19,17 @@ export const FileInput: FC<ComponentProps<typeof x.input> & { name: string }> = 
           display="flex"
           justifyContent="center"
           alignItems="center"
-          fontSize="2xl"
-          bg="gray-400"
+          fontSize="36px"
           borderRadius={4}
+          bg="white"
+          border="1px solid"
+          borderColor="black"
           style={{ aspectRatio: 10 / 3 }}
         >
-          +
+          <x.div textAlign="center">
+            <x.div>+</x.div>
+            <x.strong display="block" fontSize="1rem" fontWeight={400} mb=".5rem">Nahrát fotografii</x.strong>
+          </x.div>
         </x.div>
         <x.input
           type="file"

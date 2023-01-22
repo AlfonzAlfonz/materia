@@ -71,33 +71,33 @@ export const SubmitForm: FC = () => {
               Nový projekt
             </Title>
             <x.div spaceY="10px" display="flex" flexDirection="column">
-              <x.label fontSize="13px" spaceY={1}>
+              <x.label fontSize="sm" spaceY={1}>
                 <span>Název projektu</span>
                 <InputField name="name" />
                 <Error name="name" />
               </x.label>
-              <x.label fontSize="13px" spaceY={1}>
+              <x.label fontSize="sm" spaceY={1}>
                 <span>Designér</span>
                 <SelectInput name="designers" options={discover.designers} />
                 <Error name="designers" />
               </x.label>
-              <x.label fontSize="13px" spaceY={1}>
+              <x.label fontSize="sm" spaceY={1}>
                 <span> Materiály</span>
                 <SelectInput name="materials" options={discover.materials} />
                 <Error name="materials" />
               </x.label>
-              <x.label fontSize="13px" spaceY={1}>
+              <x.label fontSize="sm" spaceY={1}>
                 <span> Technologie tisku</span>
                 <SelectInput name="technologies" options={discover.technologies} />
                 <Error name="technologies" />
               </x.label>
-              <x.label fontSize="13px" spaceY={1}>
+              <x.label fontSize="sm" spaceY={1}>
                 <span>Výrobce / Tiskárna</span>
                 <SelectInput name="manufacturers" options={discover.manufacturers} />
                 <Error name="manufacturers" />
               </x.label>
 
-              <x.label fontSize="13px" spaceY={1}>
+              <x.label fontSize="sm" spaceY={1}>
                 <span>Anotace</span>
                 <InputField name="annotation" as="textarea" minHeight="300px" />
                 <Error name="annotation" />

@@ -1,8 +1,10 @@
 import { x, SystemProps } from "@xstyled/emotion";
 import { FC, ReactNode } from "react";
 import AddIcon from "@mui/icons-material/Add";
+import discover from "static/lupa.png";
 
 import { UiContext, useUi } from "./Ui";
+import Image from "next/image";
 
 interface Props {
   toggle: (s: UiContext["menu"]) => unknown;
@@ -10,20 +12,33 @@ interface Props {
 
 export const Nav: FC<Props> = ({ toggle }) => {
   return (
-    <x.div>
-      <x.div position="sticky" top={16} spaceY={2}>
-        <MenuButton m="discover" toggle={toggle}></MenuButton>
+    <x.div display="flex" gap={2} flexDirection={{ _: "column-reverse", sm: "row-reverse", md: "column" }}>
+      <x.div
+        position={{ _: "fixed", md: "sticky" }}
+        top={{ md: 16 }}
+        bottom={0}
+        left={0}
+        gap={2}
+        display="flex"
+        flexDirection={{ _: "row", md: "column" }}
+        zIndex={999}
+        w={{ _: "100%", md: "initial" }}
+        justifyContent={{ _: "space-between", md: "initial" }}
+        p={{ _: "20px", md: 0 }}
+        bg={{ _: "#EFEFEF", md: "transparent" }}
+      >
+        <MenuButton m="discover" toggle={toggle}><Image src={discover} alt="🔎" width={4.75 * 16} /></MenuButton>
         <MenuButton m="submit" toggle={toggle}><AddIcon style={{ fontSize: "52px" }} /></MenuButton>
         <MenuButton m="info" toggle={toggle}><x.span fontFamily="Times, serif" pt={2}>i</x.span></MenuButton>
       </x.div>
 
-      <x.div position="fixed" bottom={16} spaceY={2}>
+      <x.div position={{ md: "fixed" }} bottom={16} spaceY={2} w="100%" display="flex">
         <x.h1
-          transform="rotate(-90deg) translateX(-60px) translateY(33px)"
+          transform={{ md: "rotate(-90deg) translateX(-60px) translateY(33px)" }}
           transformOrigin="left center"
-          fontSize="98px"
+          fontSize={{ _: "56px", md: "98px" }}
           color="#ccc"
-          letterSpacing="-4.9px"
+          letterSpacing={{ _: `${-(56 / 98) * 4.9}px`, md: "-4.9px" }}
         >
           Comaterial
         </x.h1>
@@ -41,8 +56,8 @@ const MenuButton: FC<{
 
   return (
     <x.div
-      w="4.75rem"
-      h="4.75rem"
+      w={{ _: "4.75rem", sm: "4rem", md: "4.75rem" }}
+      h={{ _: "4.75rem", sm: "4rem", md: "4.75rem" }}
       fontSize="52px"
       display="flex"
       alignItems="center"

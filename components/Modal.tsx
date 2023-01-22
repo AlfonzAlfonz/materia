@@ -1,14 +1,12 @@
 import ModalUnstyled from "@mui/base/ModalUnstyled";
 import styled, { x } from "@xstyled/emotion";
-import clsx from "clsx";
-import { FC, forwardRef, ReactNode } from "react";
-import CloseIcon from "@mui/icons-material/Close";
+import { FC, forwardRef, ReactElement, ReactNode } from "react";
 
 interface Props {
   open: boolean;
   onOpen?: () => unknown;
   onClose?: () => unknown;
-  children?: ReactNode;
+  children: ReactElement;
 }
 
 export const Modal: FC<Props> = ({ open, onOpen, onClose, children }) => {
@@ -20,24 +18,10 @@ export const Modal: FC<Props> = ({ open, onOpen, onClose, children }) => {
       onClose={onClose}
       slots={{ backdrop: Backdrop }}
     >
-      <x.div bg="#EFEFEF" p="22px">
-        {children}
-      </x.div>
+      {children}
     </BaseModal>
   );
 };
-
-// eslint-disable-next-line react/display-name
-const BackdropUnstyled = forwardRef<HTMLDivElement, { open?: boolean; className: string }>((props, ref) => {
-  const { open, className, ...other } = props;
-  return (
-    <div
-      className={clsx({ "MuiBackdrop-open": open }, className)}
-      ref={ref}
-      {...other}
-    />
-  );
-});
 
 const BaseModal = styled(ModalUnstyled)`
   position: fixed;
@@ -47,11 +31,16 @@ const BaseModal = styled(ModalUnstyled)`
   top: 0;
   left: 0;
   display: flex;
-  align-items: center;
-  justify-content: center;
+
+  align-items: flex-start;
+  justify-content: center; 
+
+  @media (min-width: md) {
+    align-items: center;
+  }
 `;
 
-const Backdrop = styled(BackdropUnstyled)`
+const Backdrop = styled.div`
   z-index: -1;
   position: fixed;
   right: 0;

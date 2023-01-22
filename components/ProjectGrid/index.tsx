@@ -10,11 +10,11 @@ import { ProjectModal } from "./ProjectModal";
 export type GridItem = { id: number; img: string; name: string; tags: string[]; project: Project };
 
 interface Props {
-  columns: number;
+  expanded: boolean;
   items: GridItem[];
 }
 
-export const ProjectGrid: FC<Props> = ({ columns, items }) => {
+export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
   const { query, push } = useRouter();
 
   const project = useMemo(() => query.project ? items.find(i => i.id === +only(query.project)!) : undefined, [items, query.project]);
@@ -25,7 +25,12 @@ export const ProjectGrid: FC<Props> = ({ columns, items }) => {
       <x.div
         display="grid"
         gap="10px"
-        gridTemplateColumns={[...Array(columns)].map(_ => "1fr").join(" ")}
+        gridTemplateColumns={{
+          _: "1fr",
+          sm: "1fr 1fr",
+          md: [...Array(expanded ? 4 : 2)].map(_ => "1fr").join(" "),
+          lg: [...Array(expanded ? 6 : 4)].map(_ => "1fr").join(" ")
+        }}
       >
         {items.map((itm, i) => (
           <Tile
@@ -39,9 +44,19 @@ export const ProjectGrid: FC<Props> = ({ columns, items }) => {
             <x.div opacity={0} h="100%" position="relative" cursor="pointer">
               <x.div position="absolute" top={0} left={0} right={0} bottom={0} bg="black" opacity={1} />
               <x.div position="relative" h="100%" display="flex" flexDirection="column" justifyContent="space-between">
-                <x.h2 fontSize="18px" mb={3}>{itm.name}</x.h2>
+                <x.h2 fontSize="md" mb={3}>{itm.name}</x.h2>
                 <x.div display="flex" gap={1} flexWrap="wrap">
-                  {itm.tags.map(t => <SmallTag key={t} borderRadius={4} maxW="10rem" overflowX="hidden" textOverflow="ellipsis">{t}</SmallTag>)}
+                  {itm.tags.map(t => (
+                    <SmallTag
+                      key={t}
+                      borderRadius={4}
+                      maxW="10rem"
+                      overflowX="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {t}
+                    </SmallTag>
+                  ))}
                 </x.div>
               </x.div>
             </x.div>

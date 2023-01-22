@@ -30,19 +30,19 @@ export const Discover: FC = () => {
           ? <DiscoverMore />
           : (
             <>
-              <x.label display="flex" flexDirection="column" spaceY="20px">
+              <x.label display="flex" flexDirection="column" spaceY="20px" maxH="200px" overflow="hidden">
                 <Title as="div" alignSelf="flex-start">Materiál</Title>
                 <Tags tags={discover.materials} />
               </x.label>
-              <x.label display="flex" flexDirection="column" spaceY="20px">
+              <x.label display="flex" flexDirection="column" spaceY="20px" maxH="200px" overflow="hidden">
                 <Title as="div" alignSelf="flex-start">Výrobce</Title>
                 <Tags tags={discover.manufacturers} />
               </x.label>
-              <x.label display="flex" flexDirection="column" spaceY="20px">
+              <x.label display="flex" flexDirection="column" spaceY="20px" maxH="200px" overflow="hidden">
                 <Title as="div" alignSelf="flex-start">Designér</Title>
                 <Tags tags={discover.designers} />
               </x.label>
-              <x.label display="flex" flexDirection="column" spaceY="20px">
+              <x.label display="flex" flexDirection="column" spaceY="20px" maxH="200px" overflow="hidden">
                 <Title as="div" alignSelf="flex-start">Technologie</Title>
                 <Tags tags={discover.technologies} />
               </x.label>
@@ -53,15 +53,15 @@ export const Discover: FC = () => {
   );
 };
 
-export const Tags: FC<{ tags: string[] }> = ({ tags }) => {
+const Tags: FC<{ tags: string[] }> = ({ tags }) => {
   const { push, query } = useRouter();
   return (
     <x.div display="flex" flexWrap="wrap" gap="10px">
-      {tags.map(t => (
+      {[...tags].sort((a, b) => a.localeCompare(b)).map(t => (
         <Tag
           key={t}
           onClick={() => push({ query: { discover: [...new Set([...more(query.discover) ?? [], t])] } }, undefined, { shallow: true })}
-          fontSize="13px"
+          fontSize="sm"
           py={0}
         >
           {t}

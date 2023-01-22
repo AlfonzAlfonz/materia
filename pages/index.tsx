@@ -30,7 +30,7 @@ export const Index: FC<PropsOf<typeof getStaticProps>> = (props) => {
   return (
     discover
       ? <DiscoverGrid columns={cols} />
-      : <ProjectGrid items={props.projects.map(getItem)} columns={cols} />
+      : <ProjectGrid items={props.projects.map(getItem)} expanded={!menu} />
   );
 };
 

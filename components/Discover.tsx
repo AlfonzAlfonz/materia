@@ -1,12 +1,12 @@
 import { x } from "@xstyled/emotion";
 import { useRouter } from "next/router";
-import { ComponentProps, FC } from "react";
+import { ComponentProps, FC, useMemo } from "react";
 import { more, only } from "utils";
 
 import { PlainSelectInput } from "./SelectInput";
 import { Title, useUi } from "./Ui";
 import useSWR from "swr";
-import { Info } from "data/types";
+import { Info, Project } from "data/types";
 import HourglassBottomIcon from "@mui/icons-material/HourglassBottom";
 
 export const Discover: FC = () => {
@@ -14,7 +14,7 @@ export const Discover: FC = () => {
   const { discover } = useUi();
 
   return (
-    <x.div display="flex" flexDirection="column" spaceY={3} py={3}>
+    <x.div display="flex" flexDirection="column" spaceY={3}>
       <x.div spaceY="30px">
         <x.label display="flex" flexDirection="column" spaceY="20px">
           <Title as="div" alignSelf="flex-start">Hledat</Title>
@@ -91,20 +91,28 @@ export const Tag: FC<ComponentProps<typeof x.div>> = (p) => {
   );
 };
 
-const fetcher = ([key, discover]: [string, string ]): Promise<Info> =>
+const getPageFetcher = ([key, discover]: [string, string ]): Promise<Info> =>
   fetch(key + `?code=${encodeURIComponent(discover)}`).then(r => r.json());
+
+const listProjFetcher = ([key, discover]: [string, string[]]): Promise<Project[]> =>
+  fetch(key + `?${discover.map(d => `discover=${encodeURIComponent(d)}`).join("&")}`).then(r => r.json());
 
 export const DiscoverMore: FC = () => {
   const { query } = useRouter();
   const { discover } = useUi();
 
-  const { data, isLoading } = useSWR(["/api/get-page", only(query.discover)], fetcher);
+  const dicsMore = useSWR(["/api/list-projects", more(query.discover)], listProjFetcher);
+  const { data, isLoading } = useSWR(["/api/get-page", only(query.discover)], getPageFetcher);
+
+  const tags = useMemo(() =>
+    dicsMore.data?.flatMap(p => [...p.materials, ...p.manufacturers, ...p.designers, ...p.technologies]),
+  [dicsMore.data]);
 
   return (
     <x.div>
       <x.label display="flex" flexDirection="column" spaceY="20px">
         <Title as="div" alignSelf="flex-start">Spojení</Title>
-        <Tags tags={discover.manufacturers} />
+        <Tags tags={tags ?? []} />
       </x.label>
 
       {!isLoading

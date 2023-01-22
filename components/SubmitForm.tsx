@@ -68,7 +68,7 @@ export const SubmitForm: FC = () => {
         <Form>
           <x.div display="flex" flexDirection="column" spaceY={3}>
             <Title>
-              Nový projekt
+              Vytvořit projekt
             </Title>
             <x.div spaceY="10px" display="flex" flexDirection="column">
               <x.label fontSize="sm" spaceY={1}>
@@ -99,7 +99,7 @@ export const SubmitForm: FC = () => {
 
               <x.label fontSize="sm" spaceY={1}>
                 <span>Anotace</span>
-                <InputField name="annotation" as="textarea" minHeight="300px" />
+                <InputField name="annotation" as="textarea" minHeight="300px" py={2} />
                 <Error name="annotation" />
               </x.label>
             </x.div>
@@ -107,7 +107,7 @@ export const SubmitForm: FC = () => {
             <FileInput name="files" />
 
             <Button type="submit">
-              {!isSubmitting ? "Send" : "Loading"}
+              {!isSubmitting ? "Vytvořit projekt" : "Odesílání"}
             </Button>
           </x.div>
 

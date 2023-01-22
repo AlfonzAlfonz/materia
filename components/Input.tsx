@@ -13,7 +13,7 @@ export const Input: FC<ComponentProps<typeof x.input>> = (p) => (
     borderRadius={3}
     w="100%"
     h="42px"
-    fontSize="lg"
+    fontSize="md"
     {...p}
   />
 );

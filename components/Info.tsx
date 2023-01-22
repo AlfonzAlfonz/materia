@@ -4,7 +4,7 @@ import { Title } from "./Ui";
 
 export const Info: FC<{ title: string; text: string }> = ({ title, text }) => {
   return (
-    <x.div display="flex" flexDirection="column" spaceY={3} py={3}>
+    <x.div display="flex" flexDirection="column" spaceY={3}>
       <x.div spaceY="30px" display="flex" alignItems="flex-start" flexDirection="column">
         <Title as="div" alignSelf="flex-start">O projektu</Title>
 

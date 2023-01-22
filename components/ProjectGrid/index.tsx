@@ -26,12 +26,15 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
         display="grid"
         gap="10px"
         overflow="hidden"
+        h="100%"
+        alignContent="start"
         gridTemplateColumns={{
           _: "1fr",
-          sm: "1fr 1fr",
-          md: [...Array(expanded ? 4 : 2)].map(_ => "1fr").join(" "),
-          lg: [...Array(expanded ? 6 : 4)].map(_ => "1fr").join(" ")
+          sm: "minmax(0, 1fr) minmax(0, 1fr)",
+          md: `repeat(${expanded ? 4 : 2}, minmax(0, 1fr))`,
+          lg: `repeat(${expanded ? 6 : 4}, minmax(0, 1fr))`
         }}
+        mb={{ _: "40px", md: 0 }}
       >
         {items.map((itm, i) => (
           <Tile
@@ -70,8 +73,7 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
 };
 
 const getImgUrl = (src: string) =>
-  // `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75")`;
-  `url("${src}")`;
+  `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75"), url("${src}")`;
 
 export const Tile = styled.divBox<{ expanded: boolean }>`
   transition: 100ms background-color, 100ms opacity;
@@ -91,11 +93,11 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
     }
   }
 
-  &:last-of-type::after {
+  &:first-of-type::before {
     content: "";
     display: block;
     position: absolute;
-    bottom: 5;
+    top: -300px;
     width: 100%;
     border-left: 2px solid #e3e3e3;
     border-right: 2px solid #e3e3e3;
@@ -104,11 +106,11 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
   }
 
   @media (min-width: sm) {
-    &:nth-last-of-type(-n+2)::after {
+    &:nth-of-type(-n+2)::before {
       content: "";
       display: block;
       position: absolute;
-      bottom: 5;
+      top: -300px;
       width: 100%;
       border-left: 2px solid #e3e3e3;
       border-right: 2px solid #e3e3e3;
@@ -118,12 +120,12 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
   }
 
   ${p => p.expanded ? css`
-    @media (min-width: md)::after {
-      &:nth-last-of-type(-n+4) {
+    @media (min-width: md)::before {
+      &:nth-of-type(-n+4) {
         content: "";
         display: block;
         position: absolute;
-        bottom: 5;
+        top: -300px;
         width: 100%;
         border-left: 2px solid #e3e3e3;
         border-right: 2px solid #e3e3e3;
@@ -133,11 +135,11 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
     }
   ` : css`
     @media (min-width: md) {
-      &:nth-last-of-type(-n+2)::after {
+      &:nth-of-type(-n+2)::before {
         content: "";
         display: block;
         position: absolute;
-        bottom: 5;
+        top: -300px;
         width: 100%;
         border-left: 2px solid #e3e3e3;
         border-right: 2px solid #e3e3e3;
@@ -149,11 +151,11 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
 
 ${p => p.expanded ? css`
   @media (min-width: lg) {
-    &:nth-last-of-type(-n+6)::after {
+    &:nth-of-type(-n+6)::before {
       content: "";
       display: block;
       position: absolute;
-      bottom: 5;
+      top: -300px;
       width: 100%;
       border-left: 2px solid #e3e3e3;
       border-right: 2px solid #e3e3e3;
@@ -163,11 +165,11 @@ ${p => p.expanded ? css`
   }
 ` : css`
   @media (min-width: lg) {
-    &:nth-last-of-type(-n+4)::after {
+    &:nth-of-type(-n+4)::before {
       content: "";
       display: block;
       position: absolute;
-      bottom: 5;
+      top: -300px;
       width: 100%;
       border-left: 2px solid #e3e3e3;
       border-right: 2px solid #e3e3e3;

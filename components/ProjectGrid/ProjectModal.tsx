@@ -47,7 +47,7 @@ export const ProjectModal: FC<{ project?: GridItem; onClose: () => unknown }> = 
                 {project.tags.map((t) => <SmallTag key={t}>{t}</SmallTag>)}
               </x.div>
 
-              <x.p mt="25px" fontSize="sm" textAlign="justify">
+              <x.p mt="25px" fontSize="sm" textAlign="left">
                 {project.project.annotation}
               </x.p>
             </x.div>

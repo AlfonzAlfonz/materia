@@ -36,8 +36,8 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes; info: InfoType
           gap="10px"
           gridTemplateColumns={{
             _: "1fr",
-            md: [...Array(4)].map(_ => "1fr").join(" "),
-            lg: [...Array(6)].map(_ => "1fr").join(" ")
+            md: "repeat(4, minmax(0, 1fr))",
+            lg: "repeat(6, minmax(0, 1fr))"
           }}
           flexGrow={1}
         >

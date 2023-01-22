@@ -10,3 +10,9 @@ export type Project = {
 
   files: string[];
 };
+
+export type Info = {
+  code: string;
+  title: string;
+  text: string;
+};

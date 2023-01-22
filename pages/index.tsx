@@ -7,13 +7,15 @@ import { useRouter } from "next/router";
 import { FC } from "react";
 
 import { getDiscover } from "./api/discover";
+import { getPage } from "./api/get-page";
 import { listProjects } from "./api/list-projects";
 
 export const getStaticProps = async () => {
   return {
     props: {
       projects: await listProjects([]),
-      discover: await getDiscover()
+      discover: await getDiscover(),
+      info: await getPage("$$info")
     },
     revalidate: 10
   };
@@ -35,7 +37,7 @@ export const Index: FC<PropsOf<typeof getStaticProps>> = (props) => {
 };
 
 const withUi = <T extends PropsOf<typeof getStaticProps>>(C: FC<T>): FC<T> => {
-  const C2: FC<T> = (p) => <Ui discover={p.discover}><C {...p} /></Ui>;
+  const C2: FC<T> = (p) => <Ui discover={p.discover} info={p.info!}><C {...p} /></Ui>;
   C2.displayName = `withUi(${C2.displayName ?? C2.name})`;
   return C2;
 };

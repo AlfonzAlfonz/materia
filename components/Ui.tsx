@@ -1,4 +1,5 @@
 import { x } from "@xstyled/emotion";
+import { Info as InfoType } from "data/types";
 import { useRouter } from "next/router";
 import { ComponentProps, createContext, FC, ReactNode, useContext, useMemo, useState } from "react";
 
@@ -8,9 +9,9 @@ import { Nav } from "./Nav";
 import { SubmitForm } from "./SubmitForm";
 
 import type { DiscoverRes } from "pages/api/discover";
-export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ children, discover }) => {
+export const Ui: FC<{ children: ReactNode; discover: DiscoverRes; info: InfoType }> = ({ children, discover, info }) => {
   const { query, push } = useRouter();
-  const [context, setContext] = useState<UiContext>({ discover });
+  const [context, setContext] = useState<UiContext>({ discover, info });
 
   const menu = useMemo<MenuState | undefined>(() => query.discover ? "discover" : context.menu, [context.menu, query.discover]);
 
@@ -51,7 +52,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
               <x.div position="sticky" top={16}>
                 {menu === "discover" && <Discover />}
                 {menu === "submit" && <SubmitForm />}
-                {menu === "info" && <Info />}
+                {menu === "info" && <Info title={info.title} text={info.text} />}
               </x.div>
             </x.div>
           )}
@@ -68,6 +69,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes }> = ({ childre
 export interface UiContext {
   menu?: MenuState;
   discover: DiscoverRes;
+  info: InfoType;
 }
 
 type MenuState = "discover" | "submit" | "info";

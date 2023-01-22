@@ -4,7 +4,7 @@ set -e
 source ~/.bash_profile
 
 cp ~/.env.local .env.local
-mkdir static
+mkdir -p static
 ln -s ~/uploads static/uploads
 
 npx pnpm i -P

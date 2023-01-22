@@ -70,7 +70,8 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
 };
 
 const getImgUrl = (src: string) =>
-  `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75")`;
+  // `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75")`;
+  `url("${src}")`;
 
 export const Tile = styled.divBox<{ expanded: boolean }>`
   transition: 100ms background-color, 100ms opacity;

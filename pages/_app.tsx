@@ -62,4 +62,8 @@ const Global = createGlobalStyle`
   html {
     background: #EFEFEF;
   }
+
+  html body {
+    font-family: Helvetica, sans-serif;
+  }
 `;

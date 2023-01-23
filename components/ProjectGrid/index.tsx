@@ -2,7 +2,7 @@ import styled, { css, x } from "@xstyled/emotion";
 import { Project } from "data/types";
 import { useRouter } from "next/router";
 import { FC, useMemo } from "react";
-import { only } from "utils";
+import { getImgUrl, only } from "utils";
 
 import { SmallTag } from "../Ui";
 import { ProjectModal } from "./ProjectModal";
@@ -79,9 +79,6 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
     </>
   );
 };
-
-const getImgUrl = (src: string) =>
-  `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75"), url("${src}")`;
 
 export const Tile = styled.divBox<{ exp: boolean }>`
   transition: 100ms background-color, 100ms opacity;

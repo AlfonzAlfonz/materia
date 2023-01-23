@@ -43,7 +43,7 @@ export const Nav: FC<Props> = ({ toggle }) => {
         {/* eslint-disable-next-line @next/next/link-passhref */}
         <Link href="/" style={{ textDecoration: "none" }} onClick={() => toggle()}>
           <x.h1
-            transform={{ md: "rotate(-90deg) translateX(-60px) translateY(33px)" }}
+            transform={{ md: "rotate(-90deg) translateX(-60px) translateY(48px)" }}
             transformOrigin="left center"
             fontSize={{ _: "56px", md: "98px" }}
             color="#ccc"

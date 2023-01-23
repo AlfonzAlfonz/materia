@@ -2,6 +2,8 @@ import { x } from "@xstyled/emotion";
 import { useField } from "formik";
 import { ComponentProps, FC } from "react";
 
+import { Button } from "./Button";
+
 type FileValue = File[];
 
 export const FileInput: FC<ComponentProps<typeof x.input> & { name: string }> = ({ name, ...props }) => {
@@ -15,22 +17,18 @@ export const FileInput: FC<ComponentProps<typeof x.input> & { name: string }> = 
         </x.div>
       ))}
       <x.label>
-        <x.div
+        <Button
+          as="div"
           display="flex"
           justifyContent="center"
           alignItems="center"
-          fontSize="36px"
-          borderRadius={4}
-          bg="white"
-          border="1px solid"
-          borderColor="black"
-          style={{ aspectRatio: 10 / 3 }}
+          style={{ aspectRatio: 10 / 5 }}
         >
           <x.div textAlign="center">
-            <x.div>+</x.div>
+            <x.div fontSize="48px" fontWeight={300}>+</x.div>
             <x.strong display="block" fontSize="1rem" fontWeight={400} mb=".5rem">Nahrát fotografii</x.strong>
           </x.div>
-        </x.div>
+        </Button>
         <x.input
           type="file"
           position="absolute"

@@ -70,12 +70,15 @@ export const PlainSelectInput = (p: CreatableProps<Opt, true, GroupBase<Opt>>) =
           minHeight: "42px",
           width: "auto"
         }),
-        option: () => ({
+        option: (b) => ({
           "fontSize": "20px",
           "lineHeight": 2,
           "padding": "0 .5rem",
+          "backgroundColor": b.backgroundColor === "transparent"
+            ? "transparent"
+            : "#e3e3e3",
           ":hover": {
-            background: "#eee"
+            background: "#e3e3e3"
           }
         }),
         multiValueLabel: () => ({})

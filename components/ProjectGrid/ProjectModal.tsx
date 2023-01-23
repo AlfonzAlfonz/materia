@@ -15,6 +15,8 @@ export const ProjectModal: FC<{ project?: GridItem; onClose: () => unknown }> = 
           bg="#EFEFEF"
           p="22px"
           overflowY={{ _: "scroll" }}
+          maxW={{ md: "60vw" }}
+          maxH={{ md: "70vh" }}
           h={{ _: "100vh", md: "70vh" }}
           outline="none"
         >
@@ -22,9 +24,6 @@ export const ProjectModal: FC<{ project?: GridItem; onClose: () => unknown }> = 
             display="grid"
             gridTemplateColumns={{ _: "1fr", md: "1fr 1fr 1fr" }}
             gridTemplateRows={{ _: "1fr 1fr", md: "1fr" }}
-            maxW={{ md: "60vw" }}
-            maxH={{ md: "70vh" }}
-            h={{ _: "100vh", md: "70vh" }}
             gap={3}
           >
             <x.div
@@ -35,6 +34,10 @@ export const ProjectModal: FC<{ project?: GridItem; onClose: () => unknown }> = 
               w="100%"
               mr="12px"
             >
+              {/* <x.div h="24px"></x.div>
+              <x.button p="1px" boxShadow="0px 1px 3px #00000029" borderRadius="5px" bg="white" onClick={onClose} position="fixed">
+                <CloseIcon fontSize="medium" />
+              </x.button> */}
               <x.button p="1px" boxShadow="0px 1px 3px #00000029" borderRadius="5px" bg="white" onClick={onClose}>
                 <CloseIcon fontSize="medium" />
               </x.button>

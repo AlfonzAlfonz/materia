@@ -5,9 +5,10 @@ import discover from "public/lupa.svg";
 
 import { UiContext, useUi } from "./Ui";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
-  toggle: (s: UiContext["menu"]) => unknown;
+  toggle: (s?: UiContext["menu"]) => unknown;
 }
 
 export const Nav: FC<Props> = ({ toggle }) => {
@@ -39,15 +40,18 @@ export const Nav: FC<Props> = ({ toggle }) => {
       </x.div>
 
       <x.div position={{ md: "fixed" }} bottom={16} spaceY={2} w="100%" display="flex">
-        <x.h1
-          transform={{ md: "rotate(-90deg) translateX(-60px) translateY(33px)" }}
-          transformOrigin="left center"
-          fontSize={{ _: "56px", md: "98px" }}
-          color="#ccc"
-          letterSpacing={{ _: `${-(56 / 98) * 4.9}px`, md: "-4.9px" }}
-        >
-          Comaterial
-        </x.h1>
+        {/* eslint-disable-next-line @next/next/link-passhref */}
+        <Link href="/" style={{ textDecoration: "none" }} onClick={() => toggle()}>
+          <x.h1
+            transform={{ md: "rotate(-90deg) translateX(-60px) translateY(33px)" }}
+            transformOrigin="left center"
+            fontSize={{ _: "56px", md: "98px" }}
+            color="#ccc"
+            letterSpacing={{ _: `${-(56 / 98) * 4.9}px`, md: "-4.9px" }}
+          >
+            Comaterial
+          </x.h1>
+        </Link>
       </x.div>
     </x.div>
   );
@@ -79,6 +83,7 @@ const MenuButton: FC<{
         !isMd && window.scrollTo(0, 0);
         toggle(menu === m ? undefined : m);
       }}
+      className={menu === m ? "active" : ""}
       {...props}
     >
       {children}
@@ -87,7 +92,7 @@ const MenuButton: FC<{
 };
 
 export const ButtonStyle = styled.divBox`
-  &:hover img {
+  &:hover img, &.active img {
     filter: invert(1);
   }
 `;

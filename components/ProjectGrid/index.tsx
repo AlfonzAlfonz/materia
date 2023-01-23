@@ -35,11 +35,12 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
           lg: `repeat(${expanded ? 6 : 4}, minmax(0, 1fr))`
         }}
         mb={{ _: "40px", md: 0 }}
+        py="20px"
       >
         {items.map((itm, i) => (
           <Tile
             key={i}
-            expanded={expanded}
+            exp={expanded}
             position="relative"
             backgroundImage={getImgUrl(itm.img ? `/uploads/${itm.id}/${itm.img}` : "https://placekitten.com/300/400")}
             backgroundPosition="center"
@@ -48,7 +49,14 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
           >
             <x.div opacity={0} h="100%" position="relative" cursor="pointer">
               <x.div position="absolute" top={0} left={0} right={0} bottom={0} bg="black" opacity={1} borderRadius="5px" />
-              <x.div position="relative" h="100%" display="flex" flexDirection="column" justifyContent="space-between">
+              <x.div
+                position="relative"
+                h="100%"
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-between"
+                overflow="hidden"
+              >
                 <x.h2 fontSize="md" mb={3}>{itm.name}</x.h2>
                 <x.div display="flex" gap={1} flexWrap="wrap">
                   {itm.tags.map(t => (
@@ -75,7 +83,7 @@ export const ProjectGrid: FC<Props> = ({ expanded, items }) => {
 const getImgUrl = (src: string) =>
   `url("/_next/image?url=${encodeURIComponent(src)}&w=640&q=75"), url("${src}")`;
 
-export const Tile = styled.divBox<{ expanded: boolean }>`
+export const Tile = styled.divBox<{ exp: boolean }>`
   transition: 100ms background-color, 100ms opacity;
   aspect-ratio: 289 / 335;
   box-shadow: 0px 3px 6px #00000029;
@@ -119,7 +127,7 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
     }
   }
 
-  ${p => p.expanded ? css`
+  ${p => p.exp ? css`
     @media (min-width: md)::before {
       &:nth-of-type(-n+4) {
         content: "";
@@ -149,7 +157,7 @@ export const Tile = styled.divBox<{ expanded: boolean }>`
     }
   `}
 
-${p => p.expanded ? css`
+${p => p.exp ? css`
   @media (min-width: lg) {
     &:nth-of-type(-n+6)::before {
       content: "";

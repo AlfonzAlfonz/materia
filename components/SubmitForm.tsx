@@ -27,6 +27,7 @@ type SubmitForm = {
   materials?: string[];
   technologies?: string[];
   manufacturers?: string[];
+  annotation: string;
   files: File[];
 };
 
@@ -44,6 +45,7 @@ export const SubmitForm: FC = () => {
         materials: [],
         technologies: [],
         manufacturers: [],
+        annotation: "",
         files: []
       } as SubmitForm}
       validationSchema={schema}
@@ -142,6 +144,6 @@ export const schema = object().shape({
   manufacturers: arrayRequired(1, 5, string().required()),
   technologies: arrayRequired(1, 5, string().required()),
   materials: arrayRequired(1, 5, string().required()),
-  annotation: stringRequired(),
+  annotation: string(),
   files: arrayRequired(1, 3, string().required())
 });

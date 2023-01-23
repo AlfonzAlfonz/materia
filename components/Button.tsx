@@ -3,7 +3,7 @@ import { ComponentProps, FC } from "react";
 
 export const Button: FC<ComponentProps<typeof x.button>> = p => (
   <x.button
-    fontSize="lg"
+    fontSize="md"
     p="5px"
     px={4}
     borderRadius={4}

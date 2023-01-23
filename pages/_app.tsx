@@ -17,8 +17,8 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title key="title">Materia</title>
-        <meta property="og:title" content="Materia" key="og_title" />
+        <title key="title">Comaterial</title>
+        <meta property="og:title" content="Comaterial" key="og_title" />
         {/* <meta
           name="description"
           content=""
@@ -31,8 +31,8 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
         /> */}
         {/* <meta property="og:image" content="/static/og-image.png" key="og_image" /> */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://material.space" key="og_url" />
-        <meta property="og:site_name" content="Materia" />
+        <meta property="og:url" content="https://comaterial.space" key="og_url" />
+        <meta property="og:site_name" content="Comaterial" />
         <meta property="og:locale" content="cs_CZ" />
         <meta
           name="viewport"

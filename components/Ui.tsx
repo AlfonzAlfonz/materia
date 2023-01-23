@@ -9,6 +9,7 @@ import { Nav } from "./Nav";
 import { SubmitForm } from "./SubmitForm";
 
 import type { DiscoverRes } from "pages/api/discover";
+
 export const Ui: FC<{ children: ReactNode; discover: DiscoverRes; info: InfoType }> = ({ children, discover, info }) => {
   const { query, push } = useRouter();
   const [context, setContext] = useState<UiContext>({ discover, info });
@@ -46,8 +47,8 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes; info: InfoType
               gridColumn="1 / span 2"
               minWidth={0}
               pr={{ _: 0, md: 5 }}
-              py="20px"
               borderRight={{ _: "none", md: "2px solid #e3e3e3" }}
+              py="20px"
             >
               <x.div position="sticky" top={16}>
                 {menu === "discover" && <Discover />}
@@ -56,7 +57,7 @@ export const Ui: FC<{ children: ReactNode; discover: DiscoverRes; info: InfoType
               </x.div>
             </x.div>
           )}
-          <x.div gridColumn={{ _: "1", md: menu ? "3 / span 4" : "1 / span 6" }} py="20px">
+          <x.div gridColumn={{ _: "1", md: menu ? "3 / span 4" : "1 / span 6" }}>
             {children}
           </x.div>
 

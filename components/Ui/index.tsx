@@ -3,10 +3,10 @@ import { Info as InfoType } from "data/types";
 import { useRouter } from "next/router";
 import { ComponentProps, createContext, FC, ReactNode, useContext, useMemo, useState } from "react";
 
-import { Discover } from "./Discover";
-import { Info } from "./Info";
+import { Discover } from "../Discover";
+import { Info } from "../Info";
 import { Nav } from "./Nav";
-import { SubmitForm } from "./SubmitForm";
+import { SubmitForm } from "../SubmitForm";
 
 import type { DiscoverRes } from "pages/api/discover";
 

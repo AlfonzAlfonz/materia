@@ -1,7 +1,7 @@
 import { x } from "@xstyled/emotion";
 import { ComponentProps, FC } from "react";
 
-import { withField } from "./witField";
+import { withField } from "./withField";
 
 export const Input: FC<ComponentProps<typeof x.input>> = (p) => (
   <x.input

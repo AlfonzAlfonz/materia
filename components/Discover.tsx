@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { ComponentProps, FC, useMemo } from "react";
 import { more, only } from "utils";
 
-import { PlainSelectInput } from "./SelectInput";
+import { PlainSelectInput } from "./inputs/SelectInput";
 import { Title, useUi } from "./Ui";
 import useSWR from "swr";
 import { Info, Project } from "data/types";

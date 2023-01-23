@@ -2,7 +2,7 @@ import { x } from "@xstyled/emotion";
 import { useField } from "formik";
 import { ComponentProps, FC } from "react";
 
-import { Button } from "./Button";
+import { Button } from "../Button";
 
 type FileValue = File[];
 

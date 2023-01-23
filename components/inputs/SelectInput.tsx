@@ -5,7 +5,7 @@ import { FC, useMemo } from "react";
 import { components, GroupBase, MultiValueGenericProps, MultiValueProps, MultiValueRemoveProps } from "react-select";
 import Creatable, { CreatableProps } from "react-select/creatable";
 
-import { Tag } from "./Discover";
+import { Tag } from "../Discover";
 
 interface Props {
   name: string;

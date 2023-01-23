@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import discover from "public/lupa.svg";
 
-import { UiContext, useUi } from "./Ui";
+import { UiContext, useUi } from ".";
 import Image from "next/image";
 import Link from "next/link";
 

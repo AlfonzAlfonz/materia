@@ -5,11 +5,11 @@ import { FC, useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { AnySchema, array, object, string } from "yup";
 import { Button } from "./Button";
-import { Error } from "./Error";
+import { Error } from "./inputs/Error";
 
-import { FileInput } from "./FileInput";
-import { InputField } from "./Input";
-import { SelectInput } from "./SelectInput";
+import { FileInput } from "./inputs/FileInput";
+import { InputField } from "./inputs/Input";
+import { SelectInput } from "./inputs/SelectInput";
 import { Title, useUi } from "./Ui";
 
 const fetchSubmit = (key: string, { arg }: { arg: any }) =>

@@ -2,7 +2,8 @@ import sql from "data/sql";
 import fs from "fs/promises";
 import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
-import { array, object, string } from "yup";
+import { array, object, string, ValidationError } from "yup";
+import { PostgresError } from "postgres";
 
 interface ReqBody {
   name: string;
@@ -10,6 +11,7 @@ interface ReqBody {
   manufacturers: string[];
   technologies: string[];
   materials: string[];
+  annotation: string;
   files: { data: string; name: string }[];
 }
 
@@ -21,45 +23,55 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const body: ReqBody = req.body;
 
   try {
-    schema.validateSync(req.body);
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    await sql.begin(async sql => {
+      schema.validateSync(req.body);
+
+      const result = await sql`
+      INSERT INTO projects(name, designers, manufacturers, technologies, materials, annotation, files) 
+      VALUES (${body.name}, ${body.designers}, ${body.manufacturers}, ${body.technologies}, ${body.materials}, ${body.annotation}, ${body.files.map(f => f.name)}) 
+      RETURNING *`;
+
+      if (result === null) {
+        throw new ApiError("insert failed");
+      }
+
+      const basePath = path.join(process.cwd(), "public", "uploads", `${result[0].id}`);
+
+      await fs.mkdir(basePath, { recursive: true });
+
+      for (const [i, file] of body.files.entries()) {
+        const [info, data] = file.data.split(",");
+
+        const ext = info.includes("image/jpeg") || info.includes("image/jpg") ? "jpg" : info.includes("image/png") ? "png" : undefined;
+
+        if (!ext) {
+          throw new ApiError("invalid image");
+        }
+
+        await fs.writeFile(
+          path.join(basePath, `${file.name}`),
+          Buffer.from(data, "base64"),
+          { flag: "w+" }
+        );
+      }
+      res.json(result[0]);
+    });
   } catch (e) {
-    res.status(400).end("validation error");
-    return;
-  }
-
-  const result = await sql`
-    INSERT INTO projects(name, designers, manufacturers, technologies, materials, files) 
-    VALUES (${body.name}, ${body.designers}, ${body.manufacturers}, ${body.technologies}, ${body.materials}, ${body.files.map(f => f.name)}) 
-    RETURNING *`
-    .catch(() => null);
-
-  if (result === null) {
-    res.status(400).end();
-    return;
-  }
-
-  const basePath = path.join(process.cwd(), "public", "uploads", `${result[0].id}`);
-
-  await fs.mkdir(basePath, { recursive: true });
-
-  for (const [i, file] of body.files.entries()) {
-    const [info, data] = file.data.split(",");
-
-    const ext = info.includes("image/jpeg") || info.includes("image/jpg") ? "jpg" : info.includes("data/png") ? "png" : undefined;
-
-    if (!ext) {
-      res.status(400).end();
+    if (e instanceof ValidationError) {
+      error(res, "validation error");
       return;
     }
-
-    await fs.writeFile(
-      path.join(basePath, `${file.name}`),
-      Buffer.from(data, "base64"),
-      { flag: "w+" }
-    );
+    if (e instanceof ApiError) {
+      error(res, e.message);
+      return;
+    }
+    if (e instanceof PostgresError) {
+      error(res, e.message);
+      return;
+    }
+    res.status(500).end(e ? e.toString() : "Unknown error");
   }
-
-  res.json(result[0]);
 };
 
 export default handler;
@@ -70,6 +82,7 @@ export const schema = object().shape({
   manufacturers: array().of(string().required()).max(5),
   technologies: array().of(string().required()).max(5),
   materials: array().of(string().required()).max(5),
+  annotation: string(),
   files: array().max(3).of(object().shape({
     name: string().required(),
     data: string().required()
@@ -83,3 +96,9 @@ export const config = {
     }
   }
 };
+
+export const error = async (res: NextApiResponse, msg: string = "Bad request") => {
+  res.status(400).end(msg);
+};
+
+class ApiError extends Error {}

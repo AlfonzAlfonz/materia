@@ -19,7 +19,13 @@ const fetchSubmit = (key: string, { arg }: { arg: any }) =>
     headers: {
       "Content-Type": "application/json"
     }
-  }).then(r => r.json());
+  }).then(async r => {
+    if (r.ok) {
+      r.json();
+    } else {
+      throw new window.Error(await r.text());
+    }
+  });
 
 type SubmitForm = {
   name?: string;
@@ -59,11 +65,18 @@ export const SubmitForm: FC = () => {
           reader.onerror = reject;
         })));
 
-        const result = await trigger({ ...rest, files: encodedFiles });
-
-        a.setSubmitting(false);
-        setSubmitted(true);
-        push("/");
+        try {
+          await trigger({ ...rest, files: encodedFiles });
+          a.setSubmitting(false);
+          setSubmitted(true);
+          push("/");
+        } catch (e) {
+          if (e instanceof window.Error) {
+            alert(`Nepodařilo se odeslat project (${e.message})`);
+          } else {
+            alert("Nepodařilo se odeslat project");
+          }
+        }
       }}
     >
       {({ isSubmitting }) => (

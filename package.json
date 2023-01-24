@@ -39,6 +39,7 @@
     "@types/data-urls": "^3.0.1",
     "@types/formidable": "^2.0.5",
     "@types/mime-types": "^2.1.1",
+    "@types/sharp": "^0.31.1",
     "@typescript-eslint/eslint-plugin": "^4.22.2",
     "@typescript-eslint/parser": "^4.15.2",
     "eslint": "^7.20.0",

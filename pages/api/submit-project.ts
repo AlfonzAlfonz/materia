@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import path from "path";
 import { array, object, string, ValidationError } from "yup";
 import { PostgresError } from "postgres";
+import sharp from "sharp";
 
 interface ReqBody {
   name: string;
@@ -29,7 +30,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const result = await sql`
       INSERT INTO projects(name, designers, manufacturers, technologies, materials, annotation, files) 
-      VALUES (${body.name}, ${body.designers}, ${body.manufacturers}, ${body.technologies}, ${body.materials}, ${body.annotation}, ${body.files.map(f => f.name)}) 
+      VALUES (
+        ${body.name}, 
+        ${body.designers}, 
+        ${body.manufacturers}, 
+        ${body.technologies}, 
+        ${body.materials}, 
+        ${body.annotation}, 
+        ${body.files.map(f => `${path.parse(f.name).name}.jpg`
+      )}) 
       RETURNING *`;
 
       if (result === null) {
@@ -49,9 +58,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           throw new ApiError("invalid image");
         }
 
+        const p = path.parse(file.name);
+
         await fs.writeFile(
-          path.join(basePath, `${file.name}`),
-          Buffer.from(data, "base64"),
+          path.join(basePath, `${p.name}.jpg`),
+          await sharp(Buffer.from(data, "base64")).jpeg({ progressive: true, mozjpeg: true }).toBuffer(),
           { flag: "w+" }
         );
       }

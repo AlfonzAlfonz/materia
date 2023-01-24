@@ -34,8 +34,13 @@ export const FileInput: FC<ComponentProps<typeof x.input> & { name: string }> = 
           position="absolute"
           top="-10000px"
           left="-10000px"
+          accept="image/png, image/jpg, image/jpeg"
           onChange={e => {
             if (e.target.files && e.target.files.length > 0) {
+              if (e.target.files[0].size > 5 * 1024 * 1024) {
+                alert("Maximální povolená velikost je 2MB");
+                return;
+              }
               setValue([...value, e.target.files[0]]);
             }
           }}
